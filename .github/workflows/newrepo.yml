@@ -20,5 +20,12 @@ jobs:
         with:
           repo-name: '${{ github.event.inputs.repo-name }}'
           org-admin-token: '${{ secrets.ORG_ADMIN_TOKEN }}'
+      - name: Add the user who ran this workflow as Repo Admin
+        uses: rohitnb/add-repo-owner-action@main
+        id: add-owner
+        with:
+          repo-name: '${{ github.event.inputs.repo-name }}'
+          org-admin-token: '${{ secrets.ORG_CONTROLLER }}'
+          new-owner: '${{ github.actor }}'
       - name: Log URL to the repo
         run: echo "The new repo is ${{ steps.create-repo.outputs.repo-url }}"
