@@ -1,0 +1,31 @@
+name: Create Default README
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create README file
+        run: |
+          echo "# My Project" > README.md
+          echo "This is the default README file." >> README.md
+      - name: Configure Git
+        run: |
+          git config --global user.email "${{ github.event.head_commit.committer.email }}"
+          git config --global user.name "${{ github.event.head_commit.committer.name }}"
+      - name: Commit changes
+        run: |
+          git add README.md
+          git commit -m "Create default README"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GIT_ADMIN_TOKEN }}
+          branch: main
+
