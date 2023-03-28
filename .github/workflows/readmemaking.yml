@@ -8,24 +8,20 @@ on:
 jobs:
   create-readme:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Create README file
-        run: |
-          echo "# My Project" > README.md
-          echo "This is the default README file." >> README.md
-      - name: Configure Git
-        run: |
-          git config --global user.email "${{ github.event.head_commit.committer.email }}"
-          git config --global user.name "${{ github.event.head_commit.committer.name }}"
-      - name: Commit changes
-        run: |
-          git add README.md
-          git commit -m "Create default README"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.ORG_ADMIN_TOKEN }}
-          branch: main
 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create README
+      run: echo "# My Project" >> README.md
+
+    - name: Commit and push changes
+      run: |
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        git add README.md
+        git commit -m "Create default README"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
