@@ -18,38 +18,45 @@ jobs:
     
       - name: Create Repository with branch protection
         run: |     
-            ORG_NAME="${{ secrets.ORGANIZATION }}"
-            REPO_NAME="kudus"
-            VISIBILITY="public"
-            curl -X POST \
-              -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/orgs/$ORG_NAME/repos \
-              -d '{"name":"'$REPO_NAME'", "'$VISIBILITY'": true, "auto_init": true, "description": "This is my new repository"}'
-            curl --location --request PUT 'https://api.github.com/repos/$ORG_NAME/$REPO_NAME/branches/main/protection' \
-            --header 'Accept: application/vnd.github.luke-cage-preview+json' \
-            --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{
-            "required_status_checks": null, 
-            "enforce_admins": true, 
-            "required_pull_request_reviews": 
-            {
-              "dismiss_stale_reviews": true,
-              "require_code_owner_reviews": true,
-              "required_approving_review_count": ${{env.REVIEWER_COUNT}}
-            }, 
-            "restrictions": null
-            }'
-              
-#            done < <(tail -n +2 repos.csv)
+          ORG_NAME="${{ secrets.ORGANIZATION }}"
+
+          IFS=',' read -r ACTION < <(head -n 1 repos.csv)
+          echo "Action: $ACTION"
+
+          if [ $ACTION == "create-repo" ]; then
+            while IFS=',' read -r REPO_NAME VISIBILITY || [ -n "$REPO_NAME" ]; do
+              if [ -z "$VISIBILITY" ]; then
+                VISIBILITY="public"
+              fi  
+
+              curl -X POST \
+                -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" \
+                -H "Accept: application/vnd.github.v3+json" \
+                https://api.github.com/orgs/$ORG_NAME/repos \
+                -d '{"name": "'$REPO_NAME'", "private": false, "auto_init": true, "description": "This is my new repository"}'
+              curl --location --request PUT 'https://api.github.com/repos/$ORG_NAME/$REPO_NAME/branches/main/protection' \
+              --header 'Accept: application/vnd.github.luke-cage-preview+json' \
+              --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
+              --header 'Content-Type: application/json' \
+              --data-raw '{
+              "required_status_checks": null, 
+              "enforce_admins": true, 
+              "required_pull_request_reviews": 
+              {
+                "dismiss_stale_reviews": true,
+                "require_code_owner_reviews": true,
+                "required_approving_review_count": ${{env.REVIEWER_COUNT}}
+              }, 
+              "restrictions": null
+              }'              
+            done < <(tail -n +2 repos.csv)
             
-#          elif [ $ACTION == "delete-repo" ]; then
-#           while IFS=',' read -r REPO_NAME VISIBILITY || [ -n "$REPO_NAME" ]; do
-#             curl -X DELETE -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" "https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME”
-#           done < <(tail -n +2 repos.csv)  
+          elif [ $ACTION == "delete-repo" ]; then
+           while IFS=',' read -r REPO_NAME VISIBILITY || [ -n "$REPO_NAME" ]; do
+             curl -X DELETE -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" "https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME"
+           done < <(tail -n +2 repos.csv)  
             
-#          fi   
+          fi   
             
       - name: Upload CSV artifact
         uses: actions/upload-artifact@v2
