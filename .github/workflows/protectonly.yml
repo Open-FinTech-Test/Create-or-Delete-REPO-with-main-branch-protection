@@ -28,6 +28,7 @@ jobs:
               fi  
               
               echo "Repo: $REPO_NAME"
+              echo "Visibility: $VISIBILITY"
               echo "url: https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME/branches/main/protection"
               
               echo "Command: curl --location --request PUT 'https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME/branches/main/protection' \
