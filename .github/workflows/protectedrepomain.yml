@@ -1,12 +1,12 @@
 name: Create Repo With Readme And Protection
 
 on:
-#  push:
+  push:
     branches: [ main ]
 
 env:
   REVIEWER_COUNT: 2
-#  REPO_NAME: "reponame"
+  REPO_NAME: "reponame"
   ORG_NAME: "${{ secrets.ORGANIZATION }}"
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
                 -H "Accept: application/vnd.github.v3+json" \
                 https://api.github.com/orgs/${{ env.ORG_NAME }}/repos \
                 -d '{"name": "'$REPO_NAME'", "private": false, "auto_init": true, "description": "This is my new repository"}'
-              curl --location --request PUT 'https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME/branches/main/protection' \
+              curl --location --request PUT 'https://api.github.com/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/branches/main/protection' \
               --header 'Accept: application/vnd.github.luke-cage-preview+json' \
               --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
               --header 'Content-Type: application/json' \
