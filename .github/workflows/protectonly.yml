@@ -1,4 +1,4 @@
-name: Create Repo With Readme And Protection
+name: protect only
 
 on:
   push:
