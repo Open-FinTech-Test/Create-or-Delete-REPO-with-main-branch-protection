@@ -1,12 +1,11 @@
 name: Create Repo With Readme And Protection
 
 on:
- # push:
+  push:
     branches: [ main ]
 
 env:
   REVIEWER_COUNT: 2
-#  REPO_NAME: "reponame"
   ORG_NAME: "${{ secrets.ORGANIZATION }}"
 
 jobs:
@@ -37,10 +36,10 @@ jobs:
                 https://api.github.com/orgs/${{ env.ORG_NAME }}/repos \
                 -d '{"name": "'$REPO_NAME'", "private": false, "auto_init": true, "description": "This is my new repository"}'
               
-              curl --location --request PUT 'https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME/branches/main/protection' \
-              --header 'Accept: application/vnd.github.luke-cage-preview+json' \
-              --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
-              --header 'Content-Type: application/json' \
+              curl --location --request PUT "https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME/branches/main/protection" \
+              --header "Accept: application/vnd.github.luke-cage-preview+json" \
+              --header "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" \
+              --header "Content-Type: application/json" \
               --data-raw '{
               "required_status_checks": null, 
               "enforce_admins": true, 
@@ -51,7 +50,7 @@ jobs:
                 "required_approving_review_count": ${{env.REVIEWER_COUNT}}
               }, 
               "restrictions": null
-              }'              
+              }'             
             done < <(tail -n +2 repos.csv)
             
           elif [ $ACTION == "delete-repo" ]; then
