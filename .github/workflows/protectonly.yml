@@ -18,10 +18,11 @@ jobs:
       
       - name: Create Repository with branch protection
         run: |
-          curl --location --request PUT 'https://api.github.com/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/branches/main/protection' \
-          --header 'Accept: application/vnd.github.luke-cage-preview+json' \
-          --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
-          --header 'Content-Type: application/json' \
+          REPO_NAME="chinjuluvava"
+          curl --location --request PUT "https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME/branches/main/protection" \
+          --header "Accept: application/vnd.github.luke-cage-preview+json" \
+          --header "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" \
+          --header "Content-Type: application/json" \
           --data-raw '{
           "required_status_checks": null, 
           "enforce_admins": true, 
@@ -33,4 +34,5 @@ jobs:
           }, 
           "restrictions": null
           }'
+
 
