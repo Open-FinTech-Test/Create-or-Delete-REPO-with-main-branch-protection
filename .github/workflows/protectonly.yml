@@ -6,7 +6,7 @@ on:
 
 env:
   REVIEWER_COUNT: 2
-#  REPO_NAME: "jo"
+  REPO_NAME: "chinjuluvava"
   ORG_NAME: "${{ secrets.ORGANIZATION }}"
 
 jobs:
@@ -18,8 +18,7 @@ jobs:
       
       - name: Create Repository with branch protection
         run: |
-          REPO_NAME="chinjuluvava"
-          curl --location --request PUT 'https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME/branches/main/protection' \
+          curl --location --request PUT 'https://api.github.com/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/branches/main/protection' \
           --header 'Accept: application/vnd.github.luke-cage-preview+json' \
           --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
           --header 'Content-Type: application/json' \
