@@ -30,6 +30,22 @@ jobs:
               echo "Repo: $REPO_NAME"
               echo "url: https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME/branches/main/protection"
               
+              echo "Command: curl --location --request PUT 'https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME/branches/main/protection' \
+              --header 'Accept: application/vnd.github.luke-cage-preview+json' \
+              --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
+              --header 'Content-Type: application/json' \
+              --data-raw '{
+              "required_status_checks": null, 
+              "enforce_admins": true, 
+              "required_pull_request_reviews": 
+              {
+                "dismiss_stale_reviews": true,
+                "require_code_owner_reviews": true,
+                "required_approving_review_count": ${{env.REVIEWER_COUNT}}
+              }, 
+              "restrictions": null
+              }'"
+              
               curl --location --request PUT 'https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME/branches/main/protection' \
               --header 'Accept: application/vnd.github.luke-cage-preview+json' \
               --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
