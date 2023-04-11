@@ -7,7 +7,7 @@ on:
 env:
   REVIEWER_COUNT: 2
 #  REPO_NAME: "${{ github.event.inputs.repo-name }}"
-  ORG_NAME: "${{ secrets.ORGANIZATION }}"
+#  ORG_NAME: "${{ secrets.ORGANIZATION }}"
 
 jobs:
   create-repo:
