@@ -46,7 +46,7 @@ jobs:
               \"restrictions\": null
               }'"
               
-              curl --location --request PUT 'https://api.github.com/repos/${{ env.ORG_NAME }}/$REPO_NAME/branches/main/protection' \
+              curl --location --request PUT 'https://api.github.com/repos/Open-FinTech-Test/$REPO_NAME/branches/main/protection' \
               --header 'Accept: application/vnd.github.luke-cage-preview+json' \
               --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
               --header 'Content-Type: application/json' \
