@@ -1,7 +1,7 @@
 name: protect only
 
 on:
-  push:
+#  push:
     branches: [ main ]
 
 env:
