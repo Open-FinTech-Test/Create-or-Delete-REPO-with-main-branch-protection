@@ -32,8 +32,8 @@ jobs:
               curl -X POST \
                 -H "Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}" \
                 -H "Accept: application/vnd.github.v3+json" \
-                https://api.github.com/orgs/$ORG_NAME/repos \
-                -d '{"name": "'$REPO_NAME'", "private": false, "auto_init": true, "description": "This is my new repository"}'
+                https://api.github.com/orgs/${{ env.ORG_NAME }}/repos \
+                -d '{"name": "'${{ env.REPO_NAME }}'", "private": false, "auto_init": true, "description": "This is my new repository"}'
               curl --location --request PUT 'https://api.github.com/repos/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/branches/main/protection' \
               --header 'Accept: application/vnd.github.luke-cage-preview+json' \
               --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
