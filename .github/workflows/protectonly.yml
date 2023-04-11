@@ -6,7 +6,6 @@ on:
 
 env:
   REVIEWER_COUNT: 2
-  REPO_NAME: "chinjuluvava"
   ORG_NAME: "${{ secrets.ORGANIZATION }}"
 
 jobs:
