@@ -20,7 +20,7 @@ jobs:
         run: |     
           ORG_NAME="${{ secrets.ORGANIZATION }}"
           
-          curl --location --request PUT 'https://api.github.com/repos/Open-FinTech-Test/sushiii/branches/main/protection' \
+          curl --location --request PUT 'https://api.github.com/repos/$ORG_NAME/jo/branches/main/protection' \
               --header 'Accept: application/vnd.github.luke-cage-preview+json' \
               --header 'Authorization: token ${{ secrets.ORG_ADMIN_TOKEN }}' \
               --header 'Content-Type: application/json' \
