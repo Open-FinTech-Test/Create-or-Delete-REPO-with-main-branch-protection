@@ -58,4 +58,8 @@ jobs:
             
           fi   
             
-            
+      - name: Upload CSV artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: user-roles-csv
+          path: users.csv     
