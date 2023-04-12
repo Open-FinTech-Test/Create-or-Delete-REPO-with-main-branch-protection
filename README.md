@@ -1,1 +1,5 @@
-# Test-Auto
+TO CREATE REPOS WITH README PROTECTION
+      IN CSV FILE (repos.csv) MAKE THE FILE LINE AS.   create-repo,
+
+TO DELETE REPOS WITH README PROTECTION
+      IN CSV FILE (repos.csv) MAKE THE FILE LINE AS.   delete-repo,
