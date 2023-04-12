@@ -1,7 +1,5 @@
 delete-repo,
--REPO_NAME,
-reponame,
-jo,
-shabukuttan,
-test,
-jokuttan,
+Repo1,public
+Repo2,public
+Repo3,private
+Repo4,
