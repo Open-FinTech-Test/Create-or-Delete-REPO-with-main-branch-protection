@@ -1,5 +1,2 @@
-delete-repo,
-Repo1,public
-Repo2,public
-Repo3,private
-Repo4,
+create-repo,
+Github-Automation,public
