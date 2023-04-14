@@ -1,4 +1,4 @@
-create-repo,
+delete-repo,
 Repo1,public
 Repo2,public
 Repo3,private
