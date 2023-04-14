@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 env:
-  REVIEWER_COUNT: 2
+  REVIEWER_COUNT: 1
   ORG_NAME: "${{ secrets.ORGANIZATION }}"
 
 jobs:
